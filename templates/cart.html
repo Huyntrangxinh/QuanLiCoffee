@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}
+  Your Cart
+{% endblock %}
+
+{% block content %}
+<h1>Your Cart</h1>
+
+{% if cart %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for id, item in cart.items() %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ "%.2f"|format(item.price) }}</td>
+        <td>${{ "%.2f"|format(item.price * item.quantity) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h4>Total: ${{ "%.2f"|format(total_price) }}</h4>
+
+  <form method="POST" action="{{ url_for('checkout') }}">
+    <div class="mb-3">
+      <label for="note" class="form-label">Note (optional):</label>
+      <textarea name="note" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Submit Order</button>
+  </form>
+{% else %}
+  <p>Your cart is empty.</p>
+{% endif %}
+{% endblock %}

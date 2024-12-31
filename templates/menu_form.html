@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Create New Menu
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Create a New Menu Item</h1>
+
+  <!-- Important: enctype="multipart/form-data" for file uploads -->
+  <form action="{{ url_for('store_menu') }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="name" class="form-label">Menu Name</label>
+      <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" name="description"></textarea>
+    </div>
+
+    <!-- New: File input for uploading the image -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Menu Image</label>
+      <input type="file" class="form-control" id="image" name="image">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Menu</button>
+  </form>
+</div>
+{% endblock %}

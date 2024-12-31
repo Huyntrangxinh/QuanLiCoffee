@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}
+  Orders Management
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h1 class="mb-4">Orders Management</h1>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-secondary">
+        <tr>
+          <th style="width: 120px;">Order Code</th>
+          <th>Items</th>
+          <th style="width: 120px;">Total Price</th>
+          <th style="width: 120px;">Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <!-- ORDER CODE -->
+          <td>
+            <strong>{{ order.order_code }}</strong>
+          </td>
+
+          <!-- ITEMS -->
+          <td>
+            <ul class="list-unstyled mb-0">
+              {% for item_id, item in order["items"].items() %}
+                <li>
+                  • {{ item.quantity }} x {{ item.name }} = 
+                    ${{ "%.2f"|format(item.price * item.quantity) }}
+                </li>
+              {% endfor %}
+            </ul>
+          </td>
+
+          <!-- TOTAL PRICE -->
+          <td>
+            <span class="fw-bold">${{ "%.2f"|format(order.total_price) }}</span>
+          </td>
+
+          <!-- NOTE -->
+          <td>
+            {{ order.note or "-" }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
